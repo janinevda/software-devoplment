@@ -148,6 +148,7 @@
     <Compile Include="Assets\SocketIO\WebsocketSharp\WebSocketFrame.cs" />
     <Compile Include="Assets\SocketIO\WebsocketSharp\WebSocketState.cs" />
     <Compile Include="Assets\SocketIO\WebsocketSharp\WebSocketStream.cs" />
+    <Compile Include="Assets\spawnPoint.cs" />
     <Compile Include="Assets\stoplicht.cs" />
     <Compile Include="Assets\stoplichtManager.cs" />
     <None Include="Assets\SocketIO\JSONObject\readme.txt" />
