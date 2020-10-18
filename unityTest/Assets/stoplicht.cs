@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class stoplicht : MonoBehaviour
 {
@@ -10,6 +14,9 @@ public class stoplicht : MonoBehaviour
     public Material red;
 
     public int status = 0;
+    public int hasCar = 0;
+    public int hasCarTimer;
+    public int hasCarMax = 5;
 
     float timer = 5f;
     float time = 0;
@@ -23,21 +30,29 @@ public class stoplicht : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        //if (time <= 0)
-        //{
-        //    time = timer;
-            if (status == 0)
-            {
-                sl.material = red;
-            }
-            else if (status == 1)
-            {
-                sl.material = green;
-            }
-        //}
-        //else
-        //{
-        //    time -= Time.deltaTime;
-        //}
+        if (status == 0)
+        {
+            sl.material = red;
+        }
+        else if (status == 1)
+        {
+            sl.material = green;
+        }
+
+        jason jsn = jason.instance;
+
+        if (hasCarTimer <= 0)
+        {
+            hasCar = 0;
+
+            jsn.jobj["A1-1"] = "0";
+        }
+        else
+        {
+            hasCarTimer--;
+
+            jsn.jobj["A1-1"] = "1";
+        }
+
     }
 }

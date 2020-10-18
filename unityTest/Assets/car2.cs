@@ -10,12 +10,16 @@ public class car2 : MonoBehaviour
 
     public NavMeshAgent agent;
 
-    public bool mayMove = true;
+    public bool mayMove;
+
+    public int timer = 0;
+    public int maxTimer = 10;
 
     // Start is called before the first frame update
     void Start()
     {
         agent.SetDestination(path[currentTarget].transform.position);
+        mayMove = true;
     }
 
     // Update is called once per frame
@@ -26,44 +30,59 @@ public class car2 : MonoBehaviour
         agent.isStopped = true;
 
         int layerMask = 1 << 11;
-        //layerMask = ~layerMask;
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position + new Vector3(0f, 0.125f, 0f), transform.TransformDirection(Vector3.forward), 0.75f, layerMask, QueryTriggerInteraction.Ignore))
-        {
-            Debug.Log("test");
-        }
 
         if (mayMove)
         {
-            agent.isStopped = false;
-            //agent.SetDestination(path[currentTarget].transform.position);
-            if (Vector3.Distance(transform.position, path[currentTarget].transform.position) <= 0.25f)
+            if (!Physics.Raycast(transform.position + new Vector3(0f, 0.125f, 0f), transform.TransformDirection(Vector3.forward), 0.75f, layerMask, QueryTriggerInteraction.Ignore))
             {
-                if (path.Count > currentTarget + 1)
+                if (timer <= 0)
                 {
-                    currentTarget++;
-                    agent.SetDestination(path[currentTarget].transform.position);
+                    agent.isStopped = false;
+                    //agent.SetDestination(path[currentTarget].transform.position);
+                    if (Vector3.Distance(transform.position, path[currentTarget].transform.position) <= 0.25f)
+                    {
+                        if (path.Count > currentTarget + 1)
+                        {
+                            currentTarget++;
+                            agent.SetDestination(path[currentTarget].transform.position);
+                        }
+                        else
+                        {
+                            Destroy(this.gameObject);
+                        }
+                    }
                 }
                 else
                 {
-                    Destroy(this.gameObject);
+                    timer--;
                 }
+            }
+            else
+            {
+                timer = maxTimer;
             }
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        int status = other.GetComponentInParent<stoplicht>().status;
+        if (other.tag == "stop")
+        {
+            int status = other.GetComponentInParent<stoplicht>().status;
 
-        if (status == 0)
-        {
-            mayMove = false;
+            if (status == 0)
+            {
+                mayMove = false;
+            }
+            else if (status == 1)
+            {
+                mayMove = true;
+            }
         }
-        else if (status == 1)
+        else if (other.tag == "detection")
         {
-            mayMove = true;
+            other.GetComponentInParent<stoplicht>().hasCar = 1;
+            other.GetComponentInParent<stoplicht>().hasCarTimer = other.GetComponentInParent<stoplicht>().hasCarMax;
         }
     }
 }

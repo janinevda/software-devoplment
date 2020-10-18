@@ -66,6 +66,7 @@
     <Compile Include="Assets\car2.cs" />
     <Compile Include="Assets\carSpawner.cs" />
     <Compile Include="Assets\carSpawner2.cs" />
+    <Compile Include="Assets\jason.cs" />
     <Compile Include="Assets\networkManager.cs" />
     <Compile Include="Assets\road.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\JSONObject.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Assets\stoplichtManager.cs" />
     <None Include="Assets\SocketIO\JSONObject\readme.txt" />
     <None Include="Assets\SocketIO\Readme.txt" />
+    <None Include="Assets\JsonDotNet\link.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/School/jaar 3/software development/software-devoplment/unityTest/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -356,6 +358,9 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>F:/unity/2019.2.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>F:/School/jaar 3/software development/software-devoplment/unityTest/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>F:/unity/2019.2.13f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

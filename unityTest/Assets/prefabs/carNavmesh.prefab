@@ -44,7 +44,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -71,6 +71,8 @@ MonoBehaviour:
   path: []
   agent: {fileID: 1205238451622765259}
   mayMove: 1
+  timer: 0
+  maxTimer: 10
 --- !u!54 &7358557647278958778
 Rigidbody:
   m_ObjectHideFlags: 0
