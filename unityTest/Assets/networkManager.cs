@@ -27,6 +27,9 @@ public class networkManager : MonoBehaviour
 
     Socket sender;
 
+    IPAddress ipAddr;
+    IPEndPoint localEndPoint;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -36,8 +39,8 @@ public class networkManager : MonoBehaviour
 
         try
         {
-            IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, 54000);
+            ipAddr = IPAddress.Parse("127.0.0.1");
+            localEndPoint = new IPEndPoint(ipAddr, 54000);
 
             sender = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
@@ -133,19 +136,26 @@ public class networkManager : MonoBehaviour
         //}
         if (timer <= 0)
         {
-            sender.Send(Encoding.UTF8.GetBytes(formatHeader(jason.instance.jobj.ToString())));
+            if (sender.Connected)
+            {
+                sender.Send(Encoding.UTF8.GetBytes(formatHeader(jason.instance.jobj.ToString())));
 
-            byte[] messageReceived = new byte[1024];
+                byte[] messageReceived = new byte[1024];
 
-            int byteRecv = sender.Receive(messageReceived);
-            //Debug.Log("Message from Server -> {0} " + Encoding.UTF8.GetString(messageReceived, 0, byteRecv));
-            message = Encoding.UTF8.GetString(messageReceived, 0, byteRecv);
-            Debug.Log("message received");
-            Debug.Log(message);
-            newMessage = true;
+                int byteRecv = sender.Receive(messageReceived);
+                //Debug.Log("Message from Server -> {0} " + Encoding.UTF8.GetString(messageReceived, 0, byteRecv));
+                message = Encoding.UTF8.GetString(messageReceived, 0, byteRecv);
+                Debug.Log("message received");
+                Debug.Log(message);
+                newMessage = true;
 
-            //this.ws.Send(formatHeader(jason.instance.jobj.ToString()));
-            timer = timerMax;
+                //this.ws.Send(formatHeader(jason.instance.jobj.ToString()));
+                timer = timerMax;
+            }
+            else
+            {
+                sender.Connect(localEndPoint);
+            }
         }
         else
         {
