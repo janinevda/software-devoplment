@@ -57,7 +57,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11260}
     - Class: 114
-      Script: {instanceID: 16792}
+      Script: {instanceID: 18416}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -445,7 +445,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: cd11a09b2b430cd846bb25684e09d898
+      Hash: 316e1142017286148f9a66578eeb3237
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: networkManager
@@ -560,4 +560,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: F:/School/jaar 3/software development/software-devoplment/unityTest/Build/unityTest.exe
+  playerPath: F:/github repositories/software-devoplment/builds/test communicatie
+    alleen controller naar simulator/simulator/unityTest.exe

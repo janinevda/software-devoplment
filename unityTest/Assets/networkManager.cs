@@ -55,27 +55,6 @@ public class networkManager : MonoBehaviour
         }
 
         StartCoroutine("proccesMessage");
-
-        //this.ws = new WebSocket("ws://127.0.0.1:54000");
-        //this.ws.OnOpen += (sender, e) =>
-        //{
-        //    Debug.Log("connected");
-        //};
-        //this.ws.OnMessage += (sender, e) =>
-        //{
-        //    try
-        //    {
-        //        Debug.Log(e.Data);
-                
-        //        message = e.Data;
-        //        newMessage = true;
-        //    }
-        //    catch
-        //    {
-        //        Debug.Log("invalid message");
-        //    }
-        //};
-        //this.ws.Connect();
     }
 
     public void Open()
@@ -130,10 +109,6 @@ public class networkManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        //if (!this.ws.IsConnected)
-        //{
-        //    this.ws.Connect();
-        //}
         if (timer <= 0)
         {
             if (sender.Connected)
@@ -143,13 +118,11 @@ public class networkManager : MonoBehaviour
                 byte[] messageReceived = new byte[1024];
 
                 int byteRecv = sender.Receive(messageReceived);
-                //Debug.Log("Message from Server -> {0} " + Encoding.UTF8.GetString(messageReceived, 0, byteRecv));
                 message = Encoding.UTF8.GetString(messageReceived, 0, byteRecv);
                 Debug.Log("message received");
                 Debug.Log(message);
                 newMessage = true;
 
-                //this.ws.Send(formatHeader(jason.instance.jobj.ToString()));
                 timer = timerMax;
             }
             else
