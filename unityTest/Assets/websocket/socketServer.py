@@ -12,6 +12,31 @@ with open('jason_controller.json') as file:
 host = '127.0.0.1'
 port = 54000
 
+def changeToSame(x):
+    jason["A1-1"] = x
+    jason["A1-2"] = x
+    jason["A1-3"] = x
+    jason["A2-1"] = x
+    jason["A2-2"] = x
+    jason["A2-3"] = x
+    jason["A2-4"] = x
+    jason["A3-1"] = x
+    jason["A3-2"] = x
+    jason["A3-3"] = x
+    jason["A3-4"] = x
+    jason["A4-1"] = x
+    jason["A4-2"] = x
+    jason["A4-3"] = x
+    jason["A4-4"] = x
+    jason["A5-1"] = x
+    jason["A5-2"] = x
+    jason["A5-3"] = x
+    jason["A5-4"] = x
+    jason["A6-1"] = x
+    jason["A6-2"] = x
+    jason["A6-3"] = x
+    jason["A6-4"] = x
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.bind((host, port))
     sock.listen()
@@ -26,9 +51,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 x = json.loads(splittedData[1])
                 print(x["A1-1"])
                 if (x["A1-1"] == '0'):
-                    jason["A1-1"] = 0
+                    changeToSame(0)
                 elif (x["A1-1"] == '1'):
-                    jason["A1-1"] = 1
+                    changeToSame(1)
                 z = json.dumps(jason)
 
                 message = formatHeader(z)

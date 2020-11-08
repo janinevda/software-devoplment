@@ -82,7 +82,15 @@ public class car2 : MonoBehaviour
         else if (other.tag == "detection")
         {
             other.GetComponentInParent<stoplicht>().hasCar = 1;
-            other.GetComponentInParent<stoplicht>().hasCarTimer = other.GetComponentInParent<stoplicht>().hasCarMax;
+            //other.GetComponentInParent<stoplicht>().hasCarTimer = other.GetComponentInParent<stoplicht>().hasCarMax;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "detection")
+        {
+            other.GetComponentInParent<stoplicht>().hasCar = 0;
         }
     }
 }

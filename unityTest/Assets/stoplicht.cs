@@ -41,18 +41,33 @@ public class stoplicht : MonoBehaviour
 
         jason jsn = jason.instance;
 
-        if (hasCarTimer <= 0)
+        //if (hasCarTimer <= 0)
+        //{
+        //    hasCar = 0;
+
+        //    jsn.jobj["A1-1"] = "0";
+        //}
+        //else
+        //{
+        //    hasCarTimer--;
+
+        //    //jsn.jobj["A1-1"] = "1";
+        //}
+
+        StartCoroutine("changeJson", jsn);
+    }
+
+    IEnumerator changeJson(jason jsn)
+    {
+        if (hasCar == 1)
         {
-            hasCar = 0;
-
-            jsn.jobj["A1-1"] = "0";
+            jsn.jobj[transform.name] = "1";
         }
-        else
+        else if (hasCar == 0)
         {
-            hasCarTimer--;
-
-            jsn.jobj["A1-1"] = "1";
+            jsn.jobj[transform.name] = "0";
         }
 
+        yield return new WaitForSeconds(0.2f);
     }
 }

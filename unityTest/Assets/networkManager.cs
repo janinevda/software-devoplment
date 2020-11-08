@@ -16,8 +16,10 @@ public class networkManager : MonoBehaviour
 {
     private WebSocket ws;
 
-    public GameObject sl;
-    stoplicht stoplicht;
+    //public GameObject sl;
+    //stoplicht stoplicht;
+
+    public List<GameObject> stoplichten = new List<GameObject>();
 
     public float timerMax = 1f;
     public float timer = 0;
@@ -33,10 +35,6 @@ public class networkManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        stoplicht = sl.GetComponent<stoplicht>();
-
-
-
         try
         {
             ipAddr = IPAddress.Parse("127.0.0.1");
@@ -79,19 +77,43 @@ public class networkManager : MonoBehaviour
                 var splitString = message.Split(new[] { ':' }, 2);
                 if (splitString[1].Length == Convert.ToInt32(splitString[0]))
                 {
+                    Debug.Log(splitString[1]);
                     JObject jobj = JObject.Parse(splitString[1]);
-                    Debug.Log(jobj["A1-1"]);
 
-                    if (jobj["A1-1"].ToString() == "0")
+                    for (int i = 0; i < stoplichten.Count; i++)
                     {
-                        Debug.Log('0');
-                        stoplicht.status = 0;
+                        stoplicht stoplicht = stoplichten[i].GetComponent<stoplicht>();
+
+                        try
+                        {
+                            if (jobj[stoplichten[i].name].ToString() == "0")
+                            {
+                                stoplicht.status = 0;
+                            }
+                            else if (jobj[stoplichten[i].name].ToString() == "1")
+                            {
+                                stoplicht.status = 1;
+                            }
+                        }
+                        catch
+                        {
+                            Debug.Log("failed to change stoplicht");
+                        }
                     }
-                    else if (jobj["A1-1"].ToString() == "1")
-                    {
-                        Debug.Log(1);
-                        stoplicht.status = 1;
-                    }
+
+                    
+                    //Debug.Log(jobj["A1-1"]);
+
+                    //if (jobj["A1-1"].ToString() == "0")
+                    //{
+                    //    Debug.Log('0');
+                    //    stoplicht.status = 0;
+                    //}
+                    //else if (jobj["A1-1"].ToString() == "1")
+                    //{
+                    //    Debug.Log(1);
+                    //    stoplicht.status = 1;
+                    //}
                 }
                 else
                 {
