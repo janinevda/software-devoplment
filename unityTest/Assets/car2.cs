@@ -84,6 +84,10 @@ public class car2 : MonoBehaviour
             other.GetComponentInParent<stoplicht>().hasCar = 1;
             //other.GetComponentInParent<stoplicht>().hasCarTimer = other.GetComponentInParent<stoplicht>().hasCarMax;
         }
+        else if (other.tag == "spawnDetection")
+        {
+            other.GetComponentInParent<carSpawner3>().hasCar = 1;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -91,6 +95,10 @@ public class car2 : MonoBehaviour
         if (other.tag == "detection")
         {
             other.GetComponentInParent<stoplicht>().hasCar = 0;
+        }
+        else if (other.tag == "spawnDetection")
+        {
+            other.GetComponentInParent<carSpawner3>().hasCar = 0;
         }
     }
 }

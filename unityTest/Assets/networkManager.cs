@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 public class networkManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class networkManager : MonoBehaviour
 
     public List<GameObject> stoplichten = new List<GameObject>();
 
-    public float timerMax = 1f;
+    public float timerMax = 2f;
     public float timer = 0;
 
     public string message;
@@ -31,6 +32,8 @@ public class networkManager : MonoBehaviour
 
     IPAddress ipAddr;
     IPEndPoint localEndPoint;
+
+    public bool sendToServer = true;
 
     // Start is called before the first frame update
     public void Start()
@@ -51,6 +54,10 @@ public class networkManager : MonoBehaviour
         {
             Debug.Log("failed");
         }
+
+        ThreadStart childref = new ThreadStart(receive);
+        Thread recvThread = new Thread(childref);
+        recvThread.Start();
 
         StartCoroutine("proccesMessage");
     }
@@ -100,20 +107,6 @@ public class networkManager : MonoBehaviour
                             Debug.Log("failed to change stoplicht");
                         }
                     }
-
-                    
-                    //Debug.Log(jobj["A1-1"]);
-
-                    //if (jobj["A1-1"].ToString() == "0")
-                    //{
-                    //    Debug.Log('0');
-                    //    stoplicht.status = 0;
-                    //}
-                    //else if (jobj["A1-1"].ToString() == "1")
-                    //{
-                    //    Debug.Log(1);
-                    //    stoplicht.status = 1;
-                    //}
                 }
                 else
                 {
@@ -131,30 +124,40 @@ public class networkManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (timer <= 0)
+
+    }
+
+    void receive()
+    {
+        while (true)
         {
             if (sender.Connected)
             {
-                sender.Send(Encoding.UTF8.GetBytes(formatHeader(jason.instance.jobj.ToString())));
+                if (sendToServer)
+                {
+                    sender.Send(Encoding.UTF8.GetBytes(formatHeader(jason.instance.jobj.ToString())));
+                }
 
-                byte[] messageReceived = new byte[1024];
+                try
+                {
+                    byte[] messageReceived = new byte[1024];
 
-                int byteRecv = sender.Receive(messageReceived);
-                message = Encoding.UTF8.GetString(messageReceived, 0, byteRecv);
-                Debug.Log("message received");
-                Debug.Log(message);
-                newMessage = true;
-
-                timer = timerMax;
+                    int byteRecv = sender.Receive(messageReceived);
+                    message = Encoding.UTF8.GetString(messageReceived, 0, byteRecv);
+                    Debug.Log("message received");
+                    Debug.Log(message);
+                    newMessage = true;
+                }
+                catch
+                {
+                    Debug.Log("message failed to receive");
+                }
             }
             else
             {
                 sender.Connect(localEndPoint);
             }
-        }
-        else
-        {
-            timer -= Time.deltaTime;
+            Thread.Sleep(50);
         }
     }
 }

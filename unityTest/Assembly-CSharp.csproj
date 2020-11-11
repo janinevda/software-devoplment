@@ -67,6 +67,8 @@
     <Compile Include="Assets\car2.cs" />
     <Compile Include="Assets\carSpawner.cs" />
     <Compile Include="Assets\carSpawner2.cs" />
+    <Compile Include="Assets\carSpawner3.cs" />
+    <Compile Include="Assets\carSpawnManager.cs" />
     <Compile Include="Assets\jason.cs" />
     <Compile Include="Assets\networkManager.cs" />
     <Compile Include="Assets\road.cs" />
