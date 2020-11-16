@@ -61,11 +61,11 @@ public class stoplicht : MonoBehaviour
     {
         if (hasCar == 1)
         {
-            jsn.jobj[transform.name] = "1";
+            jsn.jobj[transform.name] = 1;
         }
         else if (hasCar == 0)
         {
-            jsn.jobj[transform.name] = "0";
+            jsn.jobj[transform.name] = 0;
         }
 
         yield return new WaitForSeconds(0.2f);
