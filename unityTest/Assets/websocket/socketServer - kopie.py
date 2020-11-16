@@ -28,12 +28,23 @@ host = '127.0.0.1'
 port = 54000
 
 def receiveFromSimulator():
+    #car
     Group01A_array = ["A1-1", "A1-2", "A3-1", "A3-2", "A3-3", "A3-4"]
     Group01B_array = ["A1-1", "A1-2", "A2-1", "A2-2", "A3-3", "A4-4"]
     Group01C_array = ["A1-1", "A1-2", "A1-3", "A2-1", "A2-2"]
     Group02A_array = ["A2-1", "A2-2", "A2-3", "A2-4", "A3-3", "A3-4"]
     Group02B_array = ["A2-1", "A2-2", "A1-1", "A1-2", "A3-3", "A3-4"]
 
+    #fiets + voet
+    GroupFV01_array = ["A2-3", "A2-4", "A3-3", "A3-4", "F1-1", "F1-2", "V1-1", "V1-2", "V1-3", "V1-4"]
+    GroupFV02_array = ["A1-1", "A1-2", "A3-1", "A3-2", "F2-1", "F2-2", "V2-1", "V2-2", "V2-3", "V2-4"]
+    
+    #bus
+    GroupB01A_array = ["A3-1", "A3-2", "A3-3", "A3-4", "B1-1"]
+    GroupB01B_array = ["A2-1", "A2-2", "A3-3", "A3-4", "B1-1"]
+    GroupB02_array = ["A1-1", "A1-2", "A2-1", "A2-2", "B1-2"]
+
+    
     TrafficLightsThatHasCarsEast = []
     #cars
     jason["A1-1"] = random.randint(0,1)
@@ -60,6 +71,21 @@ def receiveFromSimulator():
     jason["A6-3"] = random.randint(0,1)
     jason["A6-4"] = random.randint(0,1)
 
+    #fiets + voet
+    jason["F1-1"] = random.randint(0,1)
+    jason["F1-2"] = random.randint(0,1)
+    jason["F2-1"] = random.randint(0,1)
+    jason["F2-2"] = random.randint(0,1)
+    jason["F4-1"] = random.randint(0,1)
+    jason["F4-2"] = random.randint(0,1)
+    jason["F5-1"] = random.randint(0,1)
+    jason["F5-2"] = random.randint(0,1)
+    
+    #bus
+    jason["B1-1"] = random.randint(0,1)
+    jason["B1-2"] = random.randint(0,1)
+    jason["B4-1"] = random.randint(0,1)
+    
     for x in jason :
         if(jason[x] == 1):
             TrafficLightsThatHasCarsEast.append(x)
@@ -67,7 +93,7 @@ def receiveFromSimulator():
     resultsEast = []
     amountOfTrafficlightMatchesEast = []
     
-    for i in range(5):
+    for i in range(10):
         resultsEast.append([])
         amountOfTrafficlightMatchesEast.append([])
 
@@ -77,14 +103,24 @@ def receiveFromSimulator():
         resultsEast[2].append(Group01C_array.count(i))
         resultsEast[3].append(Group02A_array.count(i))
         resultsEast[4].append(Group02B_array.count(i))
+        resultsEast[5].append(GroupFV01_array.count(i))
+        resultsEast[6].append(GroupFV02_array.count(i))
+        resultsEast[7].append(GroupB01A_array.count(i))
+        resultsEast[8].append(GroupB01B_array.count(i))
+        resultsEast[9].append(GroupB02_array.count(i))
     
     amountOfTrafficlightMatchesEast[0].append("groep01A")
     amountOfTrafficlightMatchesEast[1].append("groep01B")
     amountOfTrafficlightMatchesEast[2].append("groep01C")
     amountOfTrafficlightMatchesEast[3].append("groep02A")
     amountOfTrafficlightMatchesEast[4].append("groep02B")
+    amountOfTrafficlightMatchesEast[5].append("groepFV01")
+    amountOfTrafficlightMatchesEast[6].append("groepFV02")
+    amountOfTrafficlightMatchesEast[7].append("groepB01A")
+    amountOfTrafficlightMatchesEast[8].append("groepB01B")
+    amountOfTrafficlightMatchesEast[9].append("groepB02")
     
-    for i in range(5):
+    for i in range(10):
         count = 0
         for j in resultsEast[i]:
             if(j == 1):
@@ -93,12 +129,12 @@ def receiveFromSimulator():
 
     highestAmountOfMatchesGroupNameEast = ""
     highestAmountOfMatchesNumberEast = 0
-
     for i in range(len(amountOfTrafficlightMatchesEast)):
         if(amountOfTrafficlightMatchesEast[i][1] > highestAmountOfMatchesNumberEast):
             highestAmountOfMatchesNumberEast = amountOfTrafficlightMatchesEast[i][1]
             highestAmountOfMatchesGroupNameEast = amountOfTrafficlightMatchesEast[i][0]
 
+    print(highestAmountOfMatchesGroupNameEast)
     groepAllRed()
     if(highestAmountOfMatchesGroupNameEast == "groep01A"):
         Group01A()
@@ -110,6 +146,16 @@ def receiveFromSimulator():
         Group02A()
     elif(highestAmountOfMatchesGroupNameEast == "groep02B"):
         Group02B()
+    elif(highestAmountOfMatchesGroupNameEast == "groepFV01"):
+        GroupFV01()
+    elif(highestAmountOfMatchesGroupNameEast == "groepFV02"):
+        GroupFV02()
+    elif(highestAmountOfMatchesGroupNameEast == "groepB01A"):
+        GroupB01A()
+    elif(highestAmountOfMatchesGroupNameEast == "groepB01B"):
+        GroupB01B()
+    elif(highestAmountOfMatchesGroupNameEast == "groepB02"):
+        GroupB02()
     else:
         print("nothing")
 
@@ -153,7 +199,49 @@ def Group02B():
     jason["A3-3"] = 1
     jason["A3-4"] = 1
     
+def GroupFV01():
+    jason["A2-3"] = 1
+    jason["A2-4"] = 1
+    jason["A3-3"] = 1
+    jason["A3-4"] = 1
+    jason["F1-1"] = 1
+    jason["F1-2"] = 1
+    jason["V1-1"] = 1
+    jason["V1-2"] = 1
+    jason["V1-3"] = 1
+    jason["V1-4"] = 1
 
+def GroupFV02():
+    jason["A1-1"] = 1
+    jason["A1-2"] = 1
+    jason["A3-1"] = 1
+    jason["A3-2"] = 1
+    jason["F2-1"] = 1
+    jason["F2-2"] = 1
+    jason["V2-1"] = 1
+    jason["V2-2"] = 1
+    jason["V2-3"] = 1
+    jason["V2-4"] = 1
+
+def GroupB01A():
+    jason["A3-1"] = 1
+    jason["A3-2"] = 1
+    jason["A3-3"] = 1
+    jason["A3-4"] = 1
+    jason["B1-1"] = 1
+
+def GroupB01B():
+    jason["A2-1"] = 1
+    jason["A2-2"] = 1
+    jason["A3-3"] = 1
+    jason["A3-4"] = 1
+    jason["B1-1"] = 1
+
+def GroupB02():
+    jason["A1-1"] = 1
+    jason["A1-2"] = 1
+    jason["A2-1"] = 1
+    jason["B1-2"] = 1
     
 def changeToSame(x):
     jason["A1-1"] = x
@@ -181,254 +269,45 @@ def changeToSame(x):
     jason["A6-4"] = x
 
 def groepAllRed():
-    jason["A1-1"] = "0"
-    jason["A1-2"] = "0"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "0"
-    jason["A2-2"] = "0"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "0"
-    jason["A3-4"] = "0"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
+    #car
+    jason["A1-1"] = 0
+    jason["A1-2"] = 0
+    jason["A1-3"] = 0
+    jason["A2-1"] = 0
+    jason["A2-2"] = 0
+    jason["A2-3"] = 0
+    jason["A2-4"] = 0
+    jason["A3-1"] = 0
+    jason["A3-2"] = 0
+    jason["A3-3"] = 0
+    jason["A3-4"] = 0
+    jason["A4-1"] = 0
+    jason["A4-2"] = 0
+    jason["A4-3"] = 0
+    jason["A4-4"] = 0
+    jason["A5-1"] = 0
+    jason["A5-2"] = 0
+    jason["A5-3"] = 0
+    jason["A5-4"] = 0
+    jason["A6-1"] = 0
+    jason["A6-2"] = 0
+    jason["A6-3"] = 0
+    jason["A6-4"] = 0
 
-def groepO1A():
-    jason["A1-1"] = "1"
-    jason["A1-2"] = "1"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "0"
-    jason["A2-2"] = "0"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "1"
-    jason["A3-2"] = "1"
-    jason["A3-3"] = "1"
-    jason["A3-4"] = "1"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepO1B():
-    jason["A1-1"] = "1"
-    jason["A1-2"] = "1"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "1"
-    jason["A2-2"] = "1"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "1"
-    jason["A3-4"] = "1"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepO1C():
-    jason["A1-1"] = "1"
-    jason["A1-2"] = "1"
-    jason["A1-3"] = "1"
-    jason["A2-1"] = "1"
-    jason["A2-2"] = "1"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "0"
-    jason["A3-4"] = "0"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepO3A():
-    jason["A1-1"] = "0"
-    jason["A1-2"] = "0"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "1"
-    jason["A2-2"] = "1"
-    jason["A2-3"] = "1"
-    jason["A2-4"] = "1"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "1"
-    jason["A3-4"] = "1"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepO3C():
-    jason["A1-1"] = "1"
-    jason["A1-2"] = "1"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "1"
-    jason["A2-2"] = "1"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "1"
-    jason["A3-4"] = "1"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepW1A():
-    jason["A1-1"] = "0"
-    jason["A1-2"] = "0"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "0"
-    jason["A2-2"] = "0"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "0"
-    jason["A3-4"] = "0"
-    jason["A4-1"] = "1"
-    jason["A4-2"] = "1"
-    jason["A4-3"] = "1"
-    jason["A4-4"] = "1"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "1"
-    jason["A5-4"] = "1"
-    jason["A6-1"] = "0"
-    jason["A6-2"] = "0"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepW2A():
-    jason["A1-1"] = "0"
-    jason["A1-2"] = "0"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "0"
-    jason["A2-2"] = "0"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "0"
-    jason["A3-4"] = "0"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "1"
-    jason["A4-4"] = "1"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "1"
-    jason["A5-4"] = "1"
-    jason["A6-1"] = "1"
-    jason["A6-2"] = "1"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
-
-def groepW2B():
-    jason["A1-1"] = "0"
-    jason["A1-2"] = "0"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "0"
-    jason["A2-2"] = "0"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "0"
-    jason["A3-4"] = "0"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "1"
-    jason["A4-4"] = "1"
-    jason["A5-1"] = "0"
-    jason["A5-2"] = "0"
-    jason["A5-3"] = "0"
-    jason["A5-4"] = "0"
-    jason["A6-1"] = "1"
-    jason["A6-2"] = "1"
-    jason["A6-3"] = "1"
-    jason["A6-4"] = "1"
-
-def groepW3A():
-    jason["A1-1"] = "0"
-    jason["A1-2"] = "0"
-    jason["A1-3"] = "0"
-    jason["A2-1"] = "0"
-    jason["A2-2"] = "0"
-    jason["A2-3"] = "0"
-    jason["A2-4"] = "0"
-    jason["A3-1"] = "0"
-    jason["A3-2"] = "0"
-    jason["A3-3"] = "0"
-    jason["A3-4"] = "0"
-    jason["A4-1"] = "0"
-    jason["A4-2"] = "0"
-    jason["A4-3"] = "0"
-    jason["A4-4"] = "0"
-    jason["A5-1"] = "1"
-    jason["A5-2"] = "1"
-    jason["A5-3"] = "1"
-    jason["A5-4"] = "1"
-    jason["A6-1"] = "1"
-    jason["A6-2"] = "1"
-    jason["A6-3"] = "0"
-    jason["A6-4"] = "0"
+    #fiets + voet
+    jason["F1-1"] = 0
+    jason["F1-2"] = 0
+    jason["F2-1"] = 0
+    jason["F2-2"] = 0
+    jason["F4-1"] = 0
+    jason["F4-2"] = 0
+    jason["F5-1"] = 0
+    jason["F5-2"] = 0
+    
+    #bus
+    jason["B1-1"] = 0
+    jason["B1-2"] = 0
+    jason["B4-1"] = 0
     
 receiveFromSimulator()
 print(jason)
