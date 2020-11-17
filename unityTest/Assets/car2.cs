@@ -33,7 +33,7 @@ public class car2 : MonoBehaviour
 
         if (mayMove)
         {
-            if (!Physics.Raycast(transform.position + new Vector3(0f, 0.125f, 0f), transform.TransformDirection(Vector3.forward), 0.75f, layerMask, QueryTriggerInteraction.Ignore))
+            if (!Physics.Raycast(transform.position + new Vector3(0f, 0.125f, 0f), transform.TransformDirection(Vector3.forward), 1f, layerMask, QueryTriggerInteraction.Ignore))
             {
                 if (timer <= 0)
                 {

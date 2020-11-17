@@ -13,6 +13,8 @@ while y == True:
     else:
         y = False
 
+sleepTime = int(input("delay tussen messages? \n 1 is 1 seconde \n"))
+
 def formatHeader(y):
     x = str(len(str(y))) + ":" + str(y)
     x.replace(" ", "")
@@ -324,7 +326,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
                     conn.sendall(message.encode("utf-8"))
             else:
-                sleepTime = 20
 
                 groepAllRed()
                 z = json.dumps(jason)

@@ -25,6 +25,9 @@ public class stoplicht : MonoBehaviour
     void Start()
     {
         sl = Stoplicht.GetComponent<Renderer>();
+
+        transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+        transform.GetChild(2).GetComponent<Renderer>().enabled = false;
     }
 
     //Update is called once per frame
@@ -40,19 +43,6 @@ public class stoplicht : MonoBehaviour
         }
 
         jason jsn = jason.instance;
-
-        //if (hasCarTimer <= 0)
-        //{
-        //    hasCar = 0;
-
-        //    jsn.jobj["A1-1"] = "0";
-        //}
-        //else
-        //{
-        //    hasCarTimer--;
-
-        //    //jsn.jobj["A1-1"] = "1";
-        //}
 
         StartCoroutine("changeJson", jsn);
     }

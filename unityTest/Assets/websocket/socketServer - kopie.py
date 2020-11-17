@@ -4,8 +4,7 @@ import time
 
 import random
 
-#y = True
-y = False
+y = True
 while y == True:
     receiveFromClient = input("ontvang van simulator? y/n \n")
     if receiveFromClient != "y":
@@ -16,13 +15,18 @@ while y == True:
     else:
         y = False
 
+sleepTime = int(input("delay tussen messages? \n 1 is 1 seconde \n"))
+
 def formatHeader(y):
+    x = None
     x = str(len(str(y))) + ":" + str(y)
     x.replace(" ", "")
     return x
 
 with open('jason_controller.json') as file:
     jason = json.load(file)
+
+jsonSimulator = None
 
 host = '127.0.0.1'
 port = 54000
@@ -46,48 +50,11 @@ def receiveFromSimulator():
 
     
     TrafficLightsThatHasCarsEast = []
-    #cars
-    jason["A1-1"] = random.randint(0,1)
-    jason["A1-2"] = random.randint(0,1)
-    jason["A1-3"] = random.randint(0,1)
-    jason["A2-1"] = random.randint(0,1)
-    jason["A2-2"] = random.randint(0,1)
-    jason["A2-3"] = random.randint(0,1)
-    jason["A2-4"] = random.randint(0,1)
-    jason["A3-1"] = random.randint(0,1)
-    jason["A3-2"] = random.randint(0,1)
-    jason["A3-3"] = random.randint(0,1)
-    jason["A3-4"] = random.randint(0,1)
-    jason["A4-1"] = random.randint(0,1)
-    jason["A4-2"] = random.randint(0,1)
-    jason["A4-3"] = random.randint(0,1)
-    jason["A4-4"] = random.randint(0,1)
-    jason["A5-1"] = random.randint(0,1)
-    jason["A5-2"] = random.randint(0,1)
-    jason["A5-3"] = random.randint(0,1)
-    jason["A5-4"] = random.randint(0,1)
-    jason["A6-1"] = random.randint(0,1)
-    jason["A6-2"] = random.randint(0,1)
-    jason["A6-3"] = random.randint(0,1)
-    jason["A6-4"] = random.randint(0,1)
 
-    #fiets + voet
-    jason["F1-1"] = random.randint(0,1)
-    jason["F1-2"] = random.randint(0,1)
-    jason["F2-1"] = random.randint(0,1)
-    jason["F2-2"] = random.randint(0,1)
-    jason["F4-1"] = random.randint(0,1)
-    jason["F4-2"] = random.randint(0,1)
-    jason["F5-1"] = random.randint(0,1)
-    jason["F5-2"] = random.randint(0,1)
-    
-    #bus
-    jason["B1-1"] = random.randint(0,1)
-    jason["B1-2"] = random.randint(0,1)
-    jason["B4-1"] = random.randint(0,1)
-    
-    for x in jason :
-        if(jason[x] == 1):
+
+    for x in jsonSimulator :
+        if(jsonSimulator[x] == 1):
+            print(x)
             TrafficLightsThatHasCarsEast.append(x)
             
     resultsEast = []
@@ -309,101 +276,99 @@ def groepAllRed():
     jason["B1-2"] = 0
     jason["B4-1"] = 0
     
-receiveFromSimulator()
-print(jason)
-#with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-    #sock.bind((host, port))
-    #sock.listen()
-    #conn, addr = sock.accept()
-    #with conn:
-    #    print('Connected by: ', addr)
-    #    while True:
-    #        if receiveFromClient == "y":
-                #data = conn.recv(1024)
-                #data = data.decode("utf-8")
-                #splittedData = data.split(":", 1)
-                #if (len(splittedData[1]) == int(splittedData[0])):
-                #    x = json.loads(splittedData[1])
-                #    print(splittedData[1])
-                #    print(x["A1-1"])
-                #    if (x["A1-1"] == '0'):
-                #        changeToSame(0)
-                #    elif (x["A1-1"] == '1'):
-                #        changeToSame(1)
-                #    z = json.dumps(jason)
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    sock.bind((host, port))
+    sock.listen()
+    print("listening...")
+    conn, addr = sock.accept()
+    with conn:
+        print('Connected by: ', addr)
+        while True:
+            if receiveFromClient == "y":
+                data = conn.recv(1024)
+                data = data.decode("utf-8")
+                splittedData = data.split(":", 1)
+                if (len(splittedData[1]) == int(splittedData[0])):
+                    jsonSimulator = json.loads(splittedData[1])
+                    
+                    receiveFromSimulator()
 
-                #    message = formatHeader(z)
+                    z = json.dumps(jason)
 
-                #    conn.sendall(message.encode("utf-8"))
-     #       else:
-     #           sleepTime = 20
+                    message = formatHeader(z)
 
-     #           groepAllRed()
-     #           z = json.dumps(jason)
-     #           message = formatHeader(z)
-     #           conn.sendall(message.encode("utf-8"))
-     #           time.sleep(sleepTime)
-     #           print("0")
+                    conn.sendall(message.encode("utf-8"))
 
-                #groepO1A()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("1")
+                    time.sleep(sleepTime)
+            else:
 
-                #groepO1B()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("2")
-
-                #groepO1C()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("3")
-
-                #groepO3A()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("4")
-
-                #groepO3C()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("5")
-
-                #groepW1A()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("6")
-
-                #groepW2A()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("7")
-
-                #groepW2B()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("8")
-
-                #groepW3A()
-                #z = json.dumps(jason)
-                #message = formatHeader(z)
-                #conn.sendall(message.encode("utf-8"))
-                #time.sleep(sleepTime)
-                #print("9")
+                groepAllRed()
+                z = json.dumps(jason)
+                message = formatHeader(z)
+                conn.sendall(message.encode("utf-8"))
+                time.sleep(sleepTime)
+                print("0")
+#
+#                groepO1A()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("1")
+#
+#                groepO1B()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("2")
+#
+#                groepO1C()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("3")
+#
+#                groepO3A()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("4")
+#
+#                groepO3C()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("5")
+#
+#                groepW1A()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("6")
+#
+#                groepW2A()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("7")
+#
+#                groepW2B()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("8")
+#
+#                groepW3A()
+#                z = json.dumps(jason)
+#                message = formatHeader(z)
+#                conn.sendall(message.encode("utf-8"))
+#                time.sleep(sleepTime)
+#                print("9")
+#

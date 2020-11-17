@@ -105,7 +105,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.25
+    agentRadius: 0.1
     agentHeight: 0.5
     agentSlope: 45
     agentClimb: 0.75
@@ -113,7 +113,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.083333336
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -2345,7 +2345,7 @@ MonoBehaviour:
   timer: 0
   message: 
   newMessage: 0
-  sendToServer: 0
+  sendToServer: 1
 --- !u!4 &385751957
 Transform:
   m_ObjectHideFlags: 0
@@ -3327,7 +3327,7 @@ MonoBehaviour:
   - {fileID: 1753357039}
   - {fileID: 1599384634}
   - {fileID: 2015213187}
-  spawnDelay: 2
+  spawnDelay: 10
 --- !u!4 &553929450
 Transform:
   m_ObjectHideFlags: 0
@@ -5212,6 +5212,26 @@ PrefabInstance:
       propertyPath: jsnObject
       value: 
       objectReference: {fileID: 116788250}
+    - target: {fileID: 7219669938613644420, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219669938613644420, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1978173750306095453, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1978173750306095453, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f768f95affe8684198b32318d5d8d87, type: 3}
 --- !u!1001 &917397977
@@ -5426,13 +5446,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.28636962, y: -0, z: -0, w: 0.9581193}
-  m_LocalPosition: {x: 48.79, y: 5.92, z: -10}
+  m_LocalRotation: {x: 0.49242353, y: 0, z: 0, w: 0.8703557}
+  m_LocalPosition: {x: 55.05, y: 26.66, z: -16.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 33.282, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 59, y: 0, z: 0}
 --- !u!1 &965897264
 GameObject:
   m_ObjectHideFlags: 0
@@ -7140,6 +7160,26 @@ PrefabInstance:
       propertyPath: jsnObject
       value: 
       objectReference: {fileID: 116788250}
+    - target: {fileID: 7219669938613644420, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219669938613644420, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1978173750306095453, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1978173750306095453, guid: 9f768f95affe8684198b32318d5d8d87,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f768f95affe8684198b32318d5d8d87, type: 3}
 --- !u!1 &1199070623 stripped
